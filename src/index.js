@@ -4,7 +4,7 @@ import '@assets/scss/common.scss';
 import router from './app/router';
 
 import createHeader from './app/header/header';
-import {htmlToElement} from '@assets/helpers/mixins';
+import {htmlToElement} from '@assets/helpers/common';
 
 let routerViewAnchor = htmlToElement(`<div></div>`);
 router(routerViewAnchor);

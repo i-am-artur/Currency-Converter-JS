@@ -22,6 +22,11 @@ const model = {
     //  sort currencisList (bookmarkedFirst = false)
     //  publish event : baseCurrencyChanged
     //  publish event : listChanged
+    // ковалевка
+    // басфор
+    // атб
+    // камуфляж
+    // британка,
   },
   getSecondCurrency() {
     return model.secondCurrency;

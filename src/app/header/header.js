@@ -1,4 +1,4 @@
-import { htmlToElement } from '@assets/helpers/mixins';
+import { htmlToElement } from '@assets/helpers/common';
 import './header.scss';
 
 let template = `

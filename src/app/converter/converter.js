@@ -1,6 +1,6 @@
 import './converter.scss';
-import {htmlToElement} from '@assets/helpers/mixins';
-import { round } from '@assets/helpers/mixins';
+import {htmlToElement} from '@assets/helpers/common';
+import { round } from '@assets/helpers/common';
 import customSelect from '../components/custom-select/custom-select';
 import model from '../model';
 import

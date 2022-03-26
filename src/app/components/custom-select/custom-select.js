@@ -1,4 +1,4 @@
-import {htmlToElement} from '@assets/helpers/mixins';
+import {htmlToElement} from '@assets/helpers/common';
 import {unsubscribe_in_eventbus_from_all_events} from '../../event-bus';
 import EventBus from '../../event-bus';
 

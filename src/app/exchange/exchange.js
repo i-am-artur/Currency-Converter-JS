@@ -1,4 +1,4 @@
-import { htmlToElement } from '@assets/helpers/mixins';
+import { htmlToElement } from '@assets/helpers/common';
 import './exchange.scss';
 import customSelect from '../components/custom-select/custom-select';
 import model from '../model';
