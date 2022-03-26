@@ -1,0 +1,35 @@
+@import "./mixins";
+
+html {
+  font-family: Montserrat, Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #4e4e4e;
+  font-size: pxToRem(18);
+}
+
+* {
+  margin: 0;
+}
+
+a {
+  text-decoration: none;
+}
+
+body {
+  margin: 0;
+  font-size: pxToRem(18);
+  background: $color-body-background;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  padding: 9px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  resize: vertical;
+  font-size: pxToRem(17);
+}

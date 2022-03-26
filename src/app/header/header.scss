@@ -1,0 +1,28 @@
+@import '../../assets/scss/mixins';
+
+.header {
+  @extend .section-properties;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 150px;
+  background-color: $color-header-background;
+  text-align: center;
+}
+
+.logo {
+  color: #ffcc00;
+}
+
+.menu {
+  display: flex;
+  justify-content: space-around;
+  padding: 0;
+  list-style-type: none;
+
+  &__link {
+    font-size: pxToRem(20);
+    font-weight: 700;
+    color: white;
+  }
+}

@@ -1,0 +1,23 @@
+$color-body-background: #282828;
+$color-header-background: #121a3e;
+$color-main-section: white;
+
+$indent-small: 5px;
+$indent-medium: 10px;
+$indent-large: 15px;
+$indent-x-large: 20px;
+$indent-xx-large: 55px;
+
+$application-max-width: 850px;
+
+@function pxToRem($px) {
+  $remValue: ($px / 16) + rem;
+  @return $remValue;
+}
+
+.section-properties {
+  max-width: $application-max-width;
+  margin-left: auto;
+  margin-right: auto;
+  padding: $indent-small;
+}
