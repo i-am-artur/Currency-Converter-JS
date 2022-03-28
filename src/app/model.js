@@ -1,61 +1,98 @@
 import EventBus from './event-bus';
 
-const model = {
-  baseCurrency: 'USD',
-  secondCurrency: 'UAH',
-  currenciesList: {
-    BGN: 1.661,
-    CZK: 21.517,
-    DKK: 6.305,
-    UAH: 30.00
+let alredayStoredcurrencyList = {
+  'AED': {
+    'code': 'AED',
+    'value': 3.67306
   },
-  getBaseCurrency() {
-      return model.baseCurrency;
+  'AFN': {
+    'code': 'AFN',
+    'value': 91.80254,
+    'bookmark': true
   },
-  setBaseCurrency(newCurrency) {
-    model.baseCurrency = newCurrency;
-    EventBus.publish(EventBus.eventNames.baseCurrencyChanged);
-    model.setCurrenciesList(model.currenciesList);
-
-    //  async setBaseCurrency(newCurrency)
-    //  await currencisList = load of currency
-    //  sort currencisList (bookmarkedFirst = false)
-    //  publish event : baseCurrencyChanged
-    //  publish event : listChanged
-    // ковалевка
-    // басфор
-    // атб
-    // камуфляж
-    // британка,
+  'ALL': {
+    'code': 'ALL',
+    'value': 108.22904
   },
-  getSecondCurrency() {
-    return model.secondCurrency;
-  },
-  setSecondCurrency(newCurrency) {
-    model.secondCurrency = newCurrency;
-    EventBus.publish(EventBus.eventNames.secondCurrencyChanged);
-  },
-  getSecondCurrencyRate() {
-    return model.getCurrenciesList()[model.getSecondCurrency()];
-  },
-  getCurrenciesList() {
-    return model.currenciesList;
-  },
-  setCurrenciesList(newCurrenciesList) {
-    newCurrenciesList = {
-      EUR: 1.661,
-      CZK: 21.517,
-      DKK: 6.305,
-      UAH: 30.00
-    };
-    model.currenciesList = newCurrenciesList;
-    EventBus.publish(EventBus.eventNames.currenciesListChanged);
+  'AMD': {
+    'code': 'AMD',
+    'value': 480.41659,
+    'bookmark': true
   }
 };
 
-// loadCurrenciesData (baseCurrency)
-// fetch (address)
-// setBaseCurrency
-// setSecondCurrency
+let fetchedCurrencyInfoSimulation = {
+  'AED': {
+    'code': 'AED',
+    'value': 3.67306
+  },
+  'AFN': {
+    'code': 'AFN',
+    'value': 91.80254
+  },
+  'ALL': {
+    'code': 'ALL',
+    'value': 108.22904
+  },
+  'AMD': {
+    'code': 'AMD',
+    'value': 480.41659
+  }
+};
 
-export default model;
+const model = () => {
+  let baseCurrency = 'USD';
+  let secondCurrency = 'AED';
+  let currenciesList=[];
+  console.log(alredayStoredcurrencyList);
+
+  fetchCurrencyData(baseCurrency);
+
+  function fetchCurrencyData(newBaseCurrency){
+    // fetch(
+    //   `https://api.currencyapi.com/v3/latest?apikey==ae8ab4f0-43cc-11ec-9d80-9f753414f6f7&base_currency=
+    //   ${newBaseCurrency}`
+    // )
+    //   .then((res) => res.json())
+    //   .then(fetchedCurrencyInfo => {
+        let fetchedCurrencyInfo = fetchedCurrencyInfoSimulation;
+
+        baseCurrency = newBaseCurrency;
+        // currenciesList = currencyInfo.data;
+        Object.values(currenciesList).forEach(currency => {
+          fetchedCurrencyInfo[currency.code].bookmark = currency.bookmark ?? false;
+        });
+
+        currenciesList = fetchedCurrencyInfo;
+        EventBus.publish(EventBus.eventNames.baseCurrencyChanged);
+        EventBus.publish(EventBus.eventNames.currenciesListChanged);
+      // });
+  }
+  return {
+    getBaseCurrency() {
+      return baseCurrency;
+    },
+    setBaseCurrency(newCurrency) {
+      fetchCurrencyData(newCurrency);
+    },
+    getSecondCurrency() {
+      return secondCurrency;
+    },
+    setSecondCurrency(newCurrency) {
+      secondCurrency = newCurrency;
+      EventBus.publish(EventBus.eventNames.secondCurrencyChanged);
+    },
+    getSecondCurrencyRate() {
+      return currenciesList[secondCurrency].value;
+    },
+    getCurrenciesList() {
+      return currenciesList;
+    },
+    toggleCurrencyBookmark(currencyName) {
+      currenciesList[currencyName].bookmark = !currenciesList[currencyName].bookmark;
+      EventBus.publish(EventBus.eventNames.currenciesListChanged);
+    }
+  }
+};
+
+export default model();

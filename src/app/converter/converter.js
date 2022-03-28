@@ -2,40 +2,42 @@ import './converter.scss';
 import {htmlToElement} from '@assets/helpers/common';
 import { round } from '@assets/helpers/common';
 import customSelect from '../components/custom-select/custom-select';
-import model from '../model';
-import
-  EventBus,
-  {unsubscribe_in_eventbus_from_all_events}
-from '../event-bus';
+import EventBus from '../event-bus';
+// import {unsubscribe_in_eventbus_from_all_events} from '../event-bus';
 
-let template = `
-  <main class="converter__container">
-    <div class="converter">
-      <div id="baseCurrencySection">
-        <span>From (base currency):</span>
-        ${/* baseCurrency Custom Component*/''}            
+import model from '../model';
+import {unsubscribe_functions_from_eventBus} from '@assets/helpers/mixins';
+
+function getTemplate() {
+  return `
+    <main class="converter__container">
+      <div class="converter">
+        <div id="baseCurrencySection">
+          <span>From (base currency):</span>
+          ${/* baseCurrency Custom Component*/''}            
+        </div>
+        <div id="secondCurrencySection">
+          <span>To:</span>   
+          ${/* secondCurrency Custom Component*/''}  
+        </div>
+        <div id="exchange-rate">
+          ${/* 1 USD = 30 UAH */''}
+          ${getExchangeRateExpression()}
+        </div>
+        <div>
+          <span>Amount:</span>
+          <input id="amount_to_convert" type="number" min="0" />
+        </div>
+        <div>
+          Result: <span id="conversion_result">${getConversionResult()}</span>
+        </div>
       </div>
-      <div id="secondCurrencySection">
-        <span>To:</span>   
-        ${/* secondCurrency Custom Component*/''}  
-      </div>
-      <div id="exchange-rate">
-        ${/* 1 USD = 30 UAH */''}
-        ${ getExchangeRateExpression() }
-      </div>
-      <div>
-        <span>Amount:</span>
-        <input id="amount_to_convert" type="number" min="0" />
-      </div>
-      <div>
-        Result: <span id="conversion_result">${getConversionResult()}</span>
-      </div>
-    </div>
-  </main>
-`;
+    </main>
+  `;
+}
 
 export default function () {
-  let converter = htmlToElement(template);
+  let converter = htmlToElement(getTemplate());
 
   let baseCurrencySection = converter.querySelector('#baseCurrencySection');
   let baseCurrencyCustomSelect = createBaseCurrencyCustomSelect();
@@ -46,8 +48,6 @@ export default function () {
   secondCurrencySection.appendChild(secondCurrencyCustomSelect);
 
   subscribeToEvents(converter);
-
-  // console.log(EventBus.events)
 
   return converter;
 }
@@ -64,25 +64,28 @@ function subscribeToEvents(converter) {
   EventBus.subscribe(EventBus.eventNames.baseCurrencyChanged, modelChanged);
   EventBus.subscribe(EventBus.eventNames.secondCurrencyChanged, modelChanged);
   function modelChanged() {
-    updateAll(html_exchange_rate, input_amount_to_convert, html_conversion_result);
+    // updateAll(html_exchange_rate, input_amount_to_convert, html_conversion_result);
+    html_exchange_rate.innerText = getExchangeRateExpression();
+    updateConversionResult(input_amount_to_convert.value, html_conversion_result);
   }
 
+  let routeChanged = () => unsubscribe_functions_from_eventBus(converter, modelChanged, routeChanged);
   EventBus.subscribe(EventBus.eventNames.routeChanged, routeChanged);
-  function routeChanged() {
-    if (!converter.isConnected) {
-      unsubscribe_in_eventbus_from_all_events(modelChanged, routeChanged);
-    }
-  }
+  // function routeChanged() {
+  //   if (!converter.isConnected) {
+  //     unsubscribe_in_eventbus_from_all_events(modelChanged, routeChanged);
+  //   }
+  // }
 }
 
 function updateConversionResult(amountToConvert, html_conversion_result) {
   html_conversion_result.innerText = getConversionResult(amountToConvert);
 }
 
-function updateAll(html_exchange_rate, input_amount_to_convert, html_conversion_result) {
-  html_exchange_rate.innerText = getExchangeRateExpression();
-  updateConversionResult(input_amount_to_convert.value, html_conversion_result);
-}
+// function updateAll(html_exchange_rate, input_amount_to_convert, html_conversion_result) {
+//   html_exchange_rate.innerText = getExchangeRateExpression();
+//   updateConversionResult(input_amount_to_convert.value, html_conversion_result);
+// }
 
 function getConversionResult(amountToConvert = 0) {
   const NUMBER_OF_DECIMALS = 2;

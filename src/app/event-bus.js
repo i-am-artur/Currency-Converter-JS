@@ -30,7 +30,7 @@ const EventBus = {
         this.events[event] = this.events[event].filter(callBack => callBack !== callbackFunctionArg);
       }
     }
-    // console.log(this.events);
+    console.log(this.events);
   }
 };
 

@@ -37,4 +37,7 @@ export function round(number, decimals) {
   return +(Math.round(number + `e+${decimals}`) + `e-${decimals}`);
 }
 
+export function copyObjectWithJSON(obj){
+  return JSON.parse(JSON.stringify(obj));
+}
 
