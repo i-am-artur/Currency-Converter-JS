@@ -5,11 +5,11 @@
   flex-direction: column;
   row-gap: $indent-medium;
   max-width: fit-content;
-  margin: $indent-xx-large auto;
+  margin: auto auto;
 
   &__container {
     @extend .section-properties;
-    @extend .full-height-if-less-than-desktop;
+    @extend .full-height-if-width-less-than-desktop;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -18,8 +18,10 @@
 }
 
 .currency-list {
-  padding: 0;
+  padding: 15px;
+  height: 300px;
   list-style-type: none;
+  overflow: auto;
 
   &__item {
     display: flex;

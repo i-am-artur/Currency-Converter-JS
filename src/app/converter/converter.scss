@@ -5,11 +5,15 @@
   flex-direction: column;
   row-gap: $indent-medium;
   max-width: fit-content;
-  margin: $indent-xx-large auto;
+  margin: auto auto;
+
+  @include onDesktop {
+    margin: $indent-xx-large auto;
+  }
 
   &__container {
     @extend .section-properties;
-    @extend .full-height-if-less-than-desktop;
+    @extend .full-height-if-width-less-than-desktop;
     display: flex;
     flex-direction: column;
     justify-content: space-around;

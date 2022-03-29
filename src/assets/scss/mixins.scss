@@ -30,7 +30,7 @@ $desktop-width: 800px;
   @media (min-width: $desktop-width) { @content; }
 }
 
-.full-height-if-less-than-desktop {
+.full-height-if-width-less-than-desktop {
   flex: 1;
   @include onDesktop{
     flex: initial;

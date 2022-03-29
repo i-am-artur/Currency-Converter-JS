@@ -1,23 +1,5 @@
 import EventBus from './event-bus';
 
-let testingFetchedCurrency = {
-  AED: 4.035167,
-  AFN: 97.221946,
-  ALL: 122.109277,
-  AMD: 538.720347,
-  ANG: 1.979039,
-  AOA: 495.079479,
-  ARS: 121.602327,
-  AUD: 1.466021,
-  AWG: 1.977479,
-  AZN: 1.871522,
-  BAM: 1.954468,
-  BBD: 2.217196,
-  BDT: 94.685347,
-  BGN: 1.955815,
-  BHD: 0.414241
-};
-
 let testingCurrencyList = {
   AED: {code:'AED', value: 4.035167,bookmark: true},
   AFN: {code:'AFN', value: 97.221946, bookmark: false},
@@ -35,35 +17,37 @@ let testingCurrencyList = {
   BGN: {code:'BGN', value: 1.955815, bookmark: false},
   BHD: {code:'BHD', value: 0.414241, bookmark: false}
 };
+
 const model = () => {
-  let baseCurrency = 'BBD';
-  let secondCurrency = 'AZN';
-  let currenciesList = testingCurrencyList;
+  let baseCurrency = 'USD';
+  let secondCurrency = 'UAH';
+  let currenciesList = {};
 
-  let fetchedCurrencyInfo = fetchCurrencyData(baseCurrency);
-
-  let tmpCurrencyList = {};
-  for(let currency in fetchedCurrencyInfo){
-    if(fetchedCurrencyInfo.hasOwnProperty(currency)){
-      tmpCurrencyList[currency] = {};
-      tmpCurrencyList[currency]['code'] = currency;
-      tmpCurrencyList[currency]['value'] = fetchedCurrencyInfo[currency];
-      tmpCurrencyList[currency]['bookmark'] = false;
-    }
-  }
-
-  Object.values(currenciesList).forEach(currency => {
-    tmpCurrencyList[currency.code].bookmark = currency.bookmark;
-  });
-
-  currenciesList = tmpCurrencyList;
-  EventBus.publish(EventBus.eventNames.baseCurrencyChanged);
-  EventBus.publish(EventBus.eventNames.currenciesListChanged);
+  fetchCurrencyData(baseCurrency);
 
   function fetchCurrencyData(newBaseCurrency){
-    baseCurrency = newBaseCurrency;
+    const apiKey = '=ae8ab4f0-43cc-11ec-9d80-9f753414f6f7';
 
-    return testingFetchedCurrency;
+    fetch(`https://api.currencyapi.com/v3/latest?apikey==${apiKey}&base_currency=${newBaseCurrency}`)
+      .then(response => response.json())
+      .then(fetchedCurrencyData => {
+        if(fetchedCurrencyData.message === 'API rate limit exceeded'){
+          processData(newBaseCurrency, testingCurrencyList);
+        }else {
+          processData(newBaseCurrency, fetchedCurrencyData.data);
+        }
+      });
+  }
+
+  function processData(newBaseCurrency, tmpCurrencyList) {
+    Object.values(currenciesList).forEach(currency => {
+      tmpCurrencyList[currency.code].bookmark = currency.bookmark;
+    });
+
+    baseCurrency = newBaseCurrency;
+    currenciesList = tmpCurrencyList;
+    EventBus.publish(EventBus.eventNames.baseCurrencyChanged);
+    EventBus.publish(EventBus.eventNames.currenciesListChanged);
   }
 
   return {
@@ -81,7 +65,7 @@ const model = () => {
       EventBus.publish(EventBus.eventNames.secondCurrencyChanged);
     },
     getSecondCurrencyRate() {
-      return currenciesList[secondCurrency].value;
+      return currenciesList[secondCurrency]?.value ?? 'loading';
     },
     getCurrenciesList() {
       return currenciesList;

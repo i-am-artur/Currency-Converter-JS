@@ -37,6 +37,7 @@ function getTemplate() {
 }
 
 export default function () {
+
   let converter = htmlToElement(getTemplate());
 
   let baseCurrencySection = converter.querySelector('#baseCurrencySection');
