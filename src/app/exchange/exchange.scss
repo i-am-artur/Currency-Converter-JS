@@ -9,6 +9,7 @@
 
   &__container {
     @extend .section-properties;
+    @extend .full-height-if-less-than-desktop;
     display: flex;
     flex-direction: column;
     justify-content: space-around;

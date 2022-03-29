@@ -64,28 +64,17 @@ function subscribeToEvents(converter) {
   EventBus.subscribe(EventBus.eventNames.baseCurrencyChanged, modelChanged);
   EventBus.subscribe(EventBus.eventNames.secondCurrencyChanged, modelChanged);
   function modelChanged() {
-    // updateAll(html_exchange_rate, input_amount_to_convert, html_conversion_result);
     html_exchange_rate.innerText = getExchangeRateExpression();
     updateConversionResult(input_amount_to_convert.value, html_conversion_result);
   }
 
   let routeChanged = () => unsubscribe_functions_from_eventBus(converter, modelChanged, routeChanged);
   EventBus.subscribe(EventBus.eventNames.routeChanged, routeChanged);
-  // function routeChanged() {
-  //   if (!converter.isConnected) {
-  //     unsubscribe_in_eventbus_from_all_events(modelChanged, routeChanged);
-  //   }
-  // }
 }
 
 function updateConversionResult(amountToConvert, html_conversion_result) {
   html_conversion_result.innerText = getConversionResult(amountToConvert);
 }
-
-// function updateAll(html_exchange_rate, input_amount_to_convert, html_conversion_result) {
-//   html_exchange_rate.innerText = getExchangeRateExpression();
-//   updateConversionResult(input_amount_to_convert.value, html_conversion_result);
-// }
 
 function getConversionResult(amountToConvert = 0) {
   const NUMBER_OF_DECIMALS = 2;

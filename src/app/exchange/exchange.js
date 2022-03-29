@@ -4,7 +4,6 @@ import customSelect from '../components/custom-select/custom-select';
 import model from '../model';
 import EventBus from '../event-bus';
 import {unsubscribe_functions_from_eventBus} from '@assets/helpers/mixins';
-// import {unsubscribe_in_eventbus_from_all_events} from '../event-bus';
 
 function getTemplate() {
   return `
@@ -51,11 +50,6 @@ export default function () {
 
   let routeChanged = () => unsubscribe_functions_from_eventBus(exchange, listChanged, routeChanged);
   EventBus.subscribe(EventBus.eventNames.routeChanged, routeChanged);
-  // function routeChanged() {
-  //   if (!exchange.isConnected) {
-  //     unsubscribe_in_eventbus_from_all_events(listChanged, routeChanged);
-  //   }
-  // }
 
   return exchange;
 }

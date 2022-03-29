@@ -1,6 +1,5 @@
 import {htmlToElement} from '@assets/helpers/common';
 import EventBus from '../../event-bus';
-// import {unsubscribe_in_eventbus_from_all_events} from '../../event-bus';
 import {unsubscribe_functions_from_eventBus} from '@assets/helpers/mixins';
 
 CustomSelect.id = 0;
@@ -45,11 +44,6 @@ export default function CustomSelect(
   let routeChanged = () =>
     unsubscribe_functions_from_eventBus(customSelect, listChanged, selectedValueChanged, routeChanged);
   EventBus.subscribe(EventBus.eventNames.routeChanged, routeChanged);
-  // function routeChanged() {
-  //   if (!customSelect.isConnected) {
-  //     unsubscribe_in_eventbus_from_all_events(listChanged, selectedValueChanged, routeChanged);
-  //   }
-  // }
 
   return customSelect;
 }

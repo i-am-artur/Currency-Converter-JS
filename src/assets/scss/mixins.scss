@@ -10,14 +10,29 @@ $indent-xx-large: 55px;
 
 $application-max-width: 850px;
 
+$desktop-width: 800px;
+
 @function pxToRem($px) {
   $remValue: ($px / 16) + rem;
   @return $remValue;
 }
 
+
+
 .section-properties {
   max-width: $application-max-width;
-  margin-left: auto;
-  margin-right: auto;
+  //margin-left: auto;
+  //margin-right: auto;
   padding: $indent-small;
+}
+
+@mixin onDesktop {
+  @media (min-width: $desktop-width) { @content; }
+}
+
+.full-height-if-less-than-desktop {
+  flex: 1;
+  @include onDesktop{
+    flex: initial;
+  }
 }

@@ -1,0 +1,7 @@
+@import '../../assets/scss/mixins';
+
+.footer {
+  @extend .section-properties;
+  text-align: center;
+  background-color: black;
+}
