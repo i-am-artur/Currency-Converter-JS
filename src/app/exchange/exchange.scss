@@ -7,6 +7,10 @@
   max-width: fit-content;
   margin: auto auto;
 
+  @include onDesktop{
+    margin: $indent-xm-large auto;
+  }
+
   &__container {
     @extend .section-properties;
     @extend .full-height-if-width-less-than-desktop;

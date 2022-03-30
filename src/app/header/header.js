@@ -1,5 +1,6 @@
-import { htmlToElement } from '@assets/helpers/common';
 import './header.scss';
+import { htmlToElement } from '@assets/helpers/common';
+import {routes} from '../router';
 
 function getTemplate() {
   return `
@@ -8,10 +9,10 @@ function getTemplate() {
       <nav class="nav">
         <ul class="menu">
           <li>
-            <a class="menu__link" href="/converter">Currency Converter</a>
+            <a class="menu__link" href="${routes.home.link}">Currency Converter</a>
           </li>
           <li>
-            <a class="menu__link" href="/exchange">Exchange Rates</a>
+            <a class="menu__link" href="${routes.exchange.link}">Exchange Rates</a>
           </li>
         </ul>
       </nav>
