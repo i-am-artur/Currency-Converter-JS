@@ -1,25 +1,7 @@
 import EventBus from './event-bus';
 
-// import {production_publicPath} from "../../webpack.config";
-
-// let routes = {
-//   home: {
-//     link: '/',
-//     module: './converter/converter'
-//   },
-//   exchange: {
-//     link: '/exchange',
-//     module: './exchange/exchange'
-//   }
-// };
-//
-// let routeModules = [];
-// console.log(routes.exchange.module)
-// routeModules[routes.home.link] = () => import(/* webpackChunkName: "converter" */ routes.home.module );
-// routeModules[routes.exchange.link] = () => import(/* webpackChunkName: "exchange" */ routes.exchange.module);
-// routeModules[routes.exchange.link] = () => import(/* webpackChunkName: "exchange" */ './exchange/exchange');
-
 const publicPath = '/Portfolio/currency-converter';
+// const publicPath = '';
 
 export const routes = {
   home: {
@@ -40,18 +22,6 @@ export default function(routerViewAnchor) {
 }
 
 function loadView() {
-
-  // let viewToLoad = routeModules[location.pathname];
-
-  // if (viewToLoad) {
-  //   viewToLoad().then(viewModule => {
-  //     let view = viewModule.default();
-  //     routerView.replaceWith(view);
-  //     routerView = view;
-  //     EventBus.publish(EventBus.eventNames.routeChanged);
-  //   });
-  // }
-
   let route = getRouteAccordingToLocation();
 
   if (route) {
@@ -110,17 +80,3 @@ function isClickedTargetInRoutesList(clickedTarget) {
 
   return false;
 }
-// function isClickedTargetInRoutesList(clickedTarget) {
-//   let linkHREF = clickedTarget.getAttribute('href');
-//   if(linkHREF) {
-//     for(let key in routeModules){
-//       if (routeModules.hasOwnProperty(key)) {
-//         if(key === linkHREF) {
-//           return true;
-//         }
-//       }
-//     }
-//   }
-//
-//   return false;
-// }

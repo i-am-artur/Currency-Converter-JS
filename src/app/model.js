@@ -26,9 +26,9 @@ const model = () => {
   fetchCurrencyData(baseCurrency);
 
   function fetchCurrencyData(newBaseCurrency){
-    const apiKey = '=ae8ab4f0-43cc-11ec-9d80-9f753414f6f7';
+    const apiKey = 'ae8ab4f0-43cc-11ec-9d80-9f753414f6f7';
 
-    fetch(`https://api.currencyapi.com/v3/latest?apikey==${apiKey}&base_currency=${newBaseCurrency}`)
+    fetch(`https://api.currencyapi.com/v3/latest?apikey=${apiKey}&base_currency=${newBaseCurrency}`)
       .then(response => response.json())
       .then(fetchedCurrencyData => {
         if(fetchedCurrencyData.message === 'API rate limit exceeded'){
